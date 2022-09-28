@@ -2,11 +2,9 @@
 #include <windows.h>
 #include <TlHelp32.h>
 
-/*(Handle é um "ponteiro abstrato". O ponteiro geralmente é definido como uma variável que aponta para um recurso do endereço de memória.
-Enquanto o Handle referencia um recurso, mas não precisa ser necessáriamente um endereço de memória, pode ser um index de um vetor ou lista por exemplo)*/
 HANDLE handleProcess = NULL;
 
-// Guarda o Id do processo que será executado. (DWORD é uma variável similar a um unsigned int)
+// Guarda o Id do processo que será executado
 DWORD processID;
 
 bool attachProcess(char *processName)
@@ -62,14 +60,14 @@ bool attachProcess(char *processName)
     return false;
 }
 
-// Criando Wrappers para facilitar o uso da função WriteProcessMemory, dessa forma poderemos usa-lá passando poucas informações
+// Criando Wrappers para função WriteProcessMemory
 template <class dataType>
 void wpm(dataType valueToWrite, DWORD addressToWrite)
 {
     WriteProcessMemory(handleProcess, (PVOID)addressToWrite, &valueToWrite, sizeof(dataType), 0);
 }
 
-// Criando Wrappers para facilitar o uso da função ReadProcessMemory, dessa forma poderemos usa-lá passando poucas informações
+// Criando Wrappers para função ReadProcessMemory
 template <class dataType>
 void rpm(DWORD addressToRead)
 {
